@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo App - Dashboard</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 0; }
+        .header { background: #1e293b; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header h2 { margin: 0; font-size: 1.5rem; }
+        .header a { color: white; text-decoration: none; background: #ef4444; padding: 8px 16px; border-radius: 6px; font-weight: bold; transition: 0.2s; }
+        .header a:hover { background: #dc2626; }
+        .content { padding: 3rem 2rem; max-width: 800px; margin: 0 auto; }
+        .welcome-card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2 data-test="dashboard-title">Bem-vindo, Usuário Teste!</h2>
+        <a href="index.html" data-test="logout-btn">Sair</a>
+    </div>
+    <div class="content">
+        <div class="welcome-card">
+            <h3>Visão Geral</h3>
+            <p>Este é o painel de controle restrito do sistema. Você conseguiu realizar o login com sucesso!</p>
+            <p style="color: #64748b;">(Esta é uma aplicação local de demonstração criada para testar o Cypress de forma independente).</p>
+        </div>
+    </div>
+</body>
+</html>

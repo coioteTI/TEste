@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo App - Cadastro</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background: #f0f2f5; margin: 0; }
+        .card { background: white; padding: 2.5rem; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); width: 100%; max-width: 320px; text-align: center; }
+        h2 { margin-top: 0; color: #333; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 14px; }
+        button { width: 100%; padding: 12px; margin-top: 10px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.2s; }
+        button:hover { background: #059669; }
+        .success { color: #059669; background: #d1fae5; padding: 10px; border-radius: 6px; display: none; margin-bottom: 15px; font-size: 0.9em; border: 1px solid #6ee7b7; }
+        .link { margin-top: 20px; font-size: 0.9em; }
+        a { color: #6366f1; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Criar Conta</h2>
+        <div id="success-msg" class="success">Usuário cadastrado com sucesso! Redirecionando...</div>
+        <input type="text" id="name" placeholder="Nome Completo" data-test="name-input">
+        <input type="email" id="email" placeholder="Email" data-test="reg-email-input">
+        <input type="password" id="password" placeholder="Senha" data-test="reg-password-input">
+        <button id="register-btn" data-test="register-btn" onclick="register()">Cadastrar</button>
+        <div class="link"><a href="index.html" data-test="back-login">Voltar para o Login</a></div>
+    </div>
+    <script>
+        function register() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            if(name && email && pass) {
+                document.getElementById('success-msg').style.display = 'block';
+                setTimeout(() => window.location.href = 'index.html', 1500);
+            }
+        }
+    </script>
+</body>
+</html>

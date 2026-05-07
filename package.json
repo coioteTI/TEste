@@ -23,5 +23,9 @@
     "cypress-mochawesome-reporter": "^4.0.2",
     "eslint": "^8.56.0",
     "eslint-plugin-cypress": "^2.15.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
   }
 }
