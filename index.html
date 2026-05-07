@@ -342,6 +342,13 @@
             const textSpan = document.getElementById('run-demo-text');
             const originalText = textSpan.innerText;
             
+            // Verificação para o GitHub Pages
+            if (window.location.hostname !== 'localhost' && window.location.protocol !== 'file:') {
+                alert('Você está na versão online (GitHub Pages)!\n\nPor limitações do servidor estático, não é possível rodar os testes do Cypress remotamente por aqui.\nMas você pode testar o App de Demonstração manualmente agora!');
+                window.open('demo-app/register.html', '_blank');
+                return;
+            }
+
             textSpan.innerText = 'Executando... (aprox 15s)';
             btn.disabled = true;
             btn.style.opacity = '0.7';
