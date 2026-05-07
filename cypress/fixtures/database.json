@@ -1,0 +1,8 @@
+{
+  "validDatabase": {
+    "name": "QA_Database_Test"
+  },
+  "duplicateDatabase": {
+    "name": "Producao_DB"
+  }
+}

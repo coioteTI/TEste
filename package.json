@@ -1,0 +1,27 @@
+{
+  "name": "qa-cypress-e2e",
+  "version": "1.0.0",
+  "description": "Projeto de automação E2E utilizando Cypress para teste técnico",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx cypress run",
+    "cypress:open": "npx cypress open",
+    "cypress:run": "npx cypress run",
+    "cypress:run:chrome": "npx cypress run --browser chrome",
+    "lint": "eslint cypress/**/*.js"
+  },
+  "keywords": [
+    "cypress",
+    "e2e",
+    "qa",
+    "test"
+  ],
+  "author": "QA Engineer",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.8.1",
+    "cypress-mochawesome-reporter": "^4.0.2",
+    "eslint": "^8.56.0",
+    "eslint-plugin-cypress": "^2.15.1"
+  }
+}
