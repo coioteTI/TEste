@@ -41,4 +41,15 @@ describe('Sistema Básico - Testes E2E Completos', () => {
     cy.contains('Credenciais inválidas').should('be.visible');
     cy.url().should('not.include', 'dashboard.html');
   });
+
+  it('CT04 - [BUG] Deve garantir que o campo de senha no cadastro esconda os caracteres (Falha Intencional)', () => {
+    // Acessa a página de cadastro
+    cy.get('[data-test="register-link"]').click();
+    
+    // Verifica se o campo de senha é do tipo "password" para garantir a segurança dos dados.
+    // Como injetamos um BUG na aplicação mudando o tipo para "text", este teste irá FALHAR.
+    // Isso demonstrará a utilidade do Cypress em achar quebras de segurança na UI!
+    cy.get('[data-test="reg-password-input"]')
+      .should('have.attr', 'type', 'password');
+  });
 });

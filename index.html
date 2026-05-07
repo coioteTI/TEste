@@ -259,13 +259,6 @@
                 <h1>QA Automação Cypress</h1>
                 <p>Projeto E2E Profissional • Page Objects • Testes Resilientes</p>
             </div>
-            <!-- Botão Voltar -->
-            <a href="javascript:history.back()" class="back-btn" onclick="goBack()">
-                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Voltar
-            </a>
         </header>
 
         <div class="grid">
@@ -327,12 +320,6 @@
     </div>
 
     <script>
-        function goBack() {
-            // Se o history.back() não funcionar (ex: abriu direto na aba nova), redireciona para a raiz
-            if (window.history.length <= 1) {
-                window.location.href = '../';
-            }
-        }
 
         // Simula uma busca para verificar se a pasta de reports foi gerada
         // E exibe o botão dinamicamente caso o cypress já tenha sido rodado.
