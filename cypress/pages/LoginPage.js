@@ -1,16 +1,13 @@
 class LoginPage {
-  // Mapeamento de Elementos
   elements = {
-    emailInput: () => cy.get('[data-test="email-input"]'),
-    passwordInput: () => cy.get('[data-test="password-input"]'),
-    loginBtn: () => cy.get('[data-test="login-submit"]'),
-    errorMessage: () => cy.get('[data-test="error-message"]'),
-    dashboardHeader: () => cy.get('h1').contains('Dashboard')
+    emailInput: () => cy.get('input#email'),
+    passwordInput: () => cy.get('input#password'),
+    loginBtn: () => cy.contains('button', 'Entrar'),
+    continuarBtn: () => cy.contains('button', 'Continuar')
   };
 
-  // Ações
   visit() {
-    cy.visit('/login');
+    cy.visit('/');
   }
 
   fillEmail(email) {
@@ -29,16 +26,23 @@ class LoginPage {
     this.fillEmail(email);
     this.fillPassword(password);
     this.submit();
+    
+    // Lida com o modal de 'Continuar' específico do ColmeIA
+    cy.get('body').then($body => {
+      if ($body.find('button:contains("Continuar")').length > 0) {
+        cy.contains('button', 'Continuar').click();
+      }
+    });
   }
 
-  // Validações
   verifyErrorMessage(message) {
-    this.elements.errorMessage().should('be.visible').and('contain.text', message);
+    // Assertiva genérica para mensagens de erro visíveis na tela
+    cy.contains(message, { matchCase: false }).should('be.visible');
   }
 
   verifySuccessfulLogin() {
-    cy.url().should('include', '/dashboard');
-    this.elements.dashboardHeader().should('be.visible');
+    // Garante que saímos da tela de login
+    cy.url().should('not.include', '/login');
   }
 }
 

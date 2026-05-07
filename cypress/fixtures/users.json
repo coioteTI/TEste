@@ -1,7 +1,7 @@
 {
   "validUser": {
-    "email": "qa@teste.com.br",
-    "password": "Password123!"
+    "email": "qa@test.com",
+    "password": "123456"
   },
   "invalidUser": {
     "email": "invalido@teste.com",

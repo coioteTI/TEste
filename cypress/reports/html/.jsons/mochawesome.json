@@ -1,0 +1,205 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 0,
+    "pending": 0,
+    "failures": 1,
+    "start": "2026-05-07T22:29:06.316Z",
+    "end": "2026-05-07T22:29:23.444Z",
+    "duration": 17128,
+    "testsRegistered": 6,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 5,
+    "hasSkipped": true
+  },
+  "results": [
+    {
+      "uuid": "59772a49-2451-49cf-8c33-83a6167e8fa1",
+      "title": "",
+      "fullFile": "cypress\\e2e\\database.cy.js",
+      "file": "cypress\\e2e\\database.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "346ae20d-0e1e-4897-b9e8-8a6e07c5e4d0",
+          "title": "Gerenciamento de Banco de Dados",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "CT04 - Deve validar mensagem de tabela vazia",
+              "fullTitle": "Gerenciamento de Banco de Dados CT04 - Deve validar mensagem de tabela vazia",
+              "timedOut": null,
+              "duration": 17073,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": "{\n  \"title\": \"cypress-mochawesome-reporter-screenshots\",\n  \"value\": [\n    [\n      \"\\\\database.cy.js\\\\Gerenciamento de Banco de Dados -- CT04 - Deve validar mensagem de tabela vazia -- before each hook (failed).png\"\n    ]\n  ]\n}",
+              "code": "// Intercepta a API para forçar um retorno vazio e testar o frontend\ncy.intercept('GET', '**/api/databases', {\n  body: []\n}).as('getDatabasesEmpty');\n_DatabasePage.default.visit();\ncy.wait('@getDatabasesEmpty');\n_DatabasePage.default.verifyEmptyState();",
+              "err": {
+                "message": "AssertionError: Timed out retrying after 15000ms: Expected to find content: 'Bancos de dados' but never did.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Gerenciamento de Banco de D...`",
+                "estack": "AssertionError: Timed out retrying after 15000ms: Expected to find content: 'Bancos de dados' but never did.\n\nBecause this error occurred during a `before each` hook we are skipping the remaining tests in the current suite: `Gerenciamento de Banco de D...`\n    at Object.menuBancosDeDados (webpack://qa-cypress-e2e/./cypress/pages/DatabasePage.js:3:32)\n    at DatabasePage.visit (webpack://qa-cypress-e2e/./cypress/pages/DatabasePage.js:13:18)\n    at Context.eval (webpack://qa-cypress-e2e/./cypress/e2e/database.cy.js:11:17)",
+                "diff": null
+              },
+              "uuid": "561e59fe-40e4-4595-a61a-bc03bf5c3a25",
+              "parentUUID": "346ae20d-0e1e-4897-b9e8-8a6e07c5e4d0",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "CT05 - Deve criar um banco de dados com sucesso",
+              "fullTitle": "Gerenciamento de Banco de Dados CT05 - Deve criar um banco de dados com sucesso",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('database').then(db => {\n  const dbName = `${db.validDatabase.name}_${Date.now()}`; // Garante nome único\n  _DatabasePage.default.createDatabase(dbName);\n  _DatabasePage.default.verifySuccessMessage();\n  _DatabasePage.default.verifyDatabaseInTable(dbName);\n});",
+              "err": {},
+              "uuid": "b958423e-f731-4943-ae7e-579b3fb61a91",
+              "parentUUID": "346ae20d-0e1e-4897-b9e8-8a6e07c5e4d0",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "CT06 - Deve pesquisar e atualizar a listagem de banco de dados",
+              "fullTitle": "Gerenciamento de Banco de Dados CT06 - Deve pesquisar e atualizar a listagem de banco de dados",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('database').then(db => {\n  // Cria primeiro para ter certeza que existe\n  const dbName = `${db.validDatabase.name}_search`;\n  _DatabasePage.default.createDatabase(dbName);\n  // Realiza a pesquisa\n  _DatabasePage.default.searchDatabase(dbName);\n  _DatabasePage.default.verifyDatabaseInTable(dbName);\n  // Valida que apenas a linha correta é exibida\n  _DatabasePage.default.elements.dbTableRows().should('have.length', 1);\n});",
+              "err": {},
+              "uuid": "5652adeb-8114-4bc4-90ab-24be01cfc9df",
+              "parentUUID": "346ae20d-0e1e-4897-b9e8-8a6e07c5e4d0",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "CT07 - Não deve permitir criação com campo obrigatório vazio",
+              "fullTitle": "Gerenciamento de Banco de Dados CT07 - Não deve permitir criação com campo obrigatório vazio",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "_DatabasePage.default.createDatabase(''); // Envia nome vazio\n_DatabasePage.default.verifyRequiredFieldError();",
+              "err": {},
+              "uuid": "d3a66763-9f2a-4eb9-904d-362b8c001795",
+              "parentUUID": "346ae20d-0e1e-4897-b9e8-8a6e07c5e4d0",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "CT08 - Não deve permitir criação de banco com nome duplicado",
+              "fullTitle": "Gerenciamento de Banco de Dados CT08 - Não deve permitir criação de banco com nome duplicado",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.fixture('database').then(db => {\n  const duplicateName = db.duplicateDatabase.name;\n  // Tenta criar o primeiro\n  _DatabasePage.default.createDatabase(duplicateName);\n  // Tenta criar novamente com o mesmo nome\n  _DatabasePage.default.createDatabase(duplicateName);\n  _DatabasePage.default.verifyDuplicateError();\n});",
+              "err": {},
+              "uuid": "33b4eac9-c030-4c38-8fc4-dff617cc05df",
+              "parentUUID": "346ae20d-0e1e-4897-b9e8-8a6e07c5e4d0",
+              "isHook": false,
+              "skipped": true
+            },
+            {
+              "title": "CT09 - Fluxo principal do usuário (E2E completo)",
+              "fullTitle": "Gerenciamento de Banco de Dados CT09 - Fluxo principal do usuário (E2E completo)",
+              "timedOut": null,
+              "duration": 0,
+              "state": "skipped",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const dbName = `Fluxo_E2E_${Date.now()}`;\ncy.step('1. Acessar tela de banco de dados');\n_DatabasePage.default.visit();\ncy.step('2. Validar que o banco ainda não existe');\n_DatabasePage.default.searchDatabase(dbName);\n_DatabasePage.default.verifyEmptyState();\ncy.step('3. Criar o banco de dados');\n_DatabasePage.default.createDatabase(dbName);\n_DatabasePage.default.verifySuccessMessage();\ncy.step('4. Pesquisar e validar a atualização da listagem');\n_DatabasePage.default.elements.searchInput().clear();\n_DatabasePage.default.searchDatabase(dbName);\n_DatabasePage.default.verifyDatabaseInTable(dbName);",
+              "err": {},
+              "uuid": "851f37e9-07af-4be4-9034-9fc4bbe50e2b",
+              "parentUUID": "346ae20d-0e1e-4897-b9e8-8a6e07c5e4d0",
+              "isHook": false,
+              "skipped": true
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "561e59fe-40e4-4595-a61a-bc03bf5c3a25"
+          ],
+          "pending": [],
+          "skipped": [
+            "b958423e-f731-4943-ae7e-579b3fb61a91",
+            "5652adeb-8114-4bc4-90ab-24be01cfc9df",
+            "d3a66763-9f2a-4eb9-904d-362b8c001795",
+            "33b4eac9-c030-4c38-8fc4-dff617cc05df",
+            "851f37e9-07af-4be4-9034-9fc4bbe50e2b"
+          ],
+          "duration": 17073,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "overwrite": false,
+        "html": false,
+        "json": true,
+        "reportDir": "cypress\\reports\\html\\.jsons"
+      },
+      "version": "6.3.2"
+    }
+  }
+}

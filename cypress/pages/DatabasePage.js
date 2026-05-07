@@ -1,20 +1,16 @@
 class DatabasePage {
-  // Mapeamento de Elementos
   elements = {
-    searchInput: () => cy.get('[data-test="search-db-input"]'),
-    createBtn: () => cy.get('[data-test="create-db-btn"]'),
-    dbNameInput: () => cy.get('[data-test="db-name-input"]'),
-    saveBtn: () => cy.get('[data-test="save-btn"]'),
-    dbTable: () => cy.get('[data-test="db-table"]'),
-    dbTableRows: () => cy.get('[data-test="db-table"] tbody tr'),
-    emptyStateMessage: () => cy.get('[data-test="empty-state-msg"]'),
-    errorMessage: () => cy.get('.error-msg'),
-    successToast: () => cy.get('.toast-success')
+    menuBancosDeDados: () => cy.contains('Bancos de dados'),
+    searchInput: () => cy.get("input[placeholder='Pesquisar']"),
+    createBtn: () => cy.contains('button', 'Criar'),
+    dbNameInput: () => cy.get("input[placeholder='Nome do item']"),
+    saveBtn: () => cy.contains('button', 'Salvar'),
+    dbTableRows: () => cy.get('tbody tr')
   };
 
-  // Ações
   visit() {
-    cy.visit('/databases');
+    // O menu pode estar recolhido, então forçamos o clique na opção
+    this.elements.menuBancosDeDados().click({ force: true });
   }
 
   searchDatabase(name) {
@@ -43,33 +39,28 @@ class DatabasePage {
     this.saveDatabase();
   }
 
-  // Validações
   verifyDatabaseInTable(name) {
     this.elements.dbTableRows().should('contain.text', name);
   }
 
   verifyEmptyState() {
-    this.elements.emptyStateMessage()
-      .should('be.visible')
-      .and('contain.text', 'Nenhum banco de dados encontrado');
+    // No ColmeIA a tabela não tem linhas quando vazia (apenas cabeçalho)
+    cy.get('tbody').find('tr').should('not.exist');
   }
 
   verifyRequiredFieldError() {
-    this.elements.errorMessage()
-      .should('be.visible')
-      .and('contain.text', 'O campo nome é obrigatório');
+    // Verifica se alguma mensagem de erro de campo obrigatório aparece
+    cy.contains('obrigatório', { matchCase: false }).should('be.visible');
   }
 
   verifyDuplicateError() {
-    this.elements.errorMessage()
-      .should('be.visible')
-      .and('contain.text', 'Já existe um banco de dados com este nome');
+    // Verifica se alguma mensagem de erro de duplicação aparece
+    cy.contains('já existe', { matchCase: false }).should('be.visible');
   }
   
   verifySuccessMessage() {
-    this.elements.successToast()
-      .should('be.visible')
-      .and('contain.text', 'Criado com sucesso');
+    // Geralmente um toast ou swal alert, vamos aguardar sumir o modal ou ver um "sucesso"
+    cy.contains('sucesso', { matchCase: false, timeout: 5000 }).should('be.visible');
   }
 }
 
