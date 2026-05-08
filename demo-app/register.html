@@ -32,6 +32,11 @@
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
             if(name && email && pass) {
+                // Salvar as credenciais no localStorage para permitir o login real
+                localStorage.setItem('registeredEmail', email);
+                localStorage.setItem('registeredPass', pass);
+                localStorage.setItem('registeredName', name);
+
                 document.getElementById('success-msg').style.display = 'block';
                 setTimeout(() => window.location.href = 'index.html', 1500);
             }

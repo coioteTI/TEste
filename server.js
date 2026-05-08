@@ -15,13 +15,22 @@ app.use(express.static(path.join(__dirname)));
 app.post('/api/run-test', (req, res) => {
     console.log('Iniciando execução do Cypress...');
     
-    // Roda a suíte completa de testes (ColmeIA + Sistema Local) para um relatório completo
-    exec('npx cypress run', (error, stdout, stderr) => {
-        console.log('Cypress finalizado!');
+    // Limpa relatórios antigos e roda a nova suíte
+    // Usamos ';' ou comando separado para não travar se o clean falhar
+    const cleanCmd = 'if exist cypress\\reports rd /s /q cypress\\reports';
+    const runCmd = 'npx cypress run';
+    
+    exec(`${cleanCmd} & ${runCmd}`, { maxBuffer: 1024 * 1024 * 20 }, (error, stdout, stderr) => {
+        console.log('Execução finalizada.');
+        
+        // Captura o resumo (as últimas 2500 linhas do log do Cypress)
+        const summary = stdout ? stdout.substring(Math.max(0, stdout.length - 2500)) : "Log vazio.";
+        
+        // Retornamos sempre success: true para que o front-end consiga mostrar o relatório de falhas
         res.json({ 
             success: true, 
-            message: 'Execução concluída com sucesso',
-            output: stdout 
+            message: 'Processo finalizado',
+            summary: summary
         });
     });
 });

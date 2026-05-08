@@ -11,6 +11,11 @@
         .header a:hover { background: #dc2626; }
         .content { padding: 3rem 2rem; max-width: 800px; margin: 0 auto; }
         .welcome-card { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(99, 102, 241, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+        }
     </style>
 </head>
 <body>
@@ -22,8 +27,68 @@
         <div class="welcome-card">
             <h3>Visão Geral</h3>
             <p>Este é o painel de controle restrito do sistema. Você conseguiu realizar o login com sucesso!</p>
-            <p style="color: #64748b;">(Esta é uma aplicação local de demonstração criada para testar o Cypress de forma independente).</p>
+            <p style="color: #64748b; margin-bottom: 20px;">(Esta é uma aplicação local de demonstração criada para testar o Cypress de forma independente).</p>
+            
+            <p id="status-msg" style="display: none; color: #059669; font-weight: bold; margin-bottom: 15px; background: #d1fae5; padding: 10px; border-radius: 6px; border: 1px solid #6ee7b7;">
+                ✅ Testes finalizados! O resumo está abaixo e o relatório completo foi liberado.
+            </p>
+
+            <div id="summary-container" style="display: none; background: #1e293b; color: #e2e8f0; padding: 15px; border-radius: 8px; font-family: monospace; font-size: 13px; margin-bottom: 20px; border: 1px solid #334155; overflow-x: auto; white-space: pre;">
+                <!-- O resumo do Cypress aparecerá aqui -->
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                <button id="run-demo-btn" style="background: #10b981; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.2s;">
+                    Rodar Testes Cypress
+                </button>
+                <a href="../cypress/reports/html/index.html" id="report-btn" target="_blank" style="display: none; background: #6366f1; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; text-decoration: none; transition: 0.2s;">
+                    Ver Relatório Completo
+                </a>
+            </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('run-demo-btn').addEventListener('click', async () => {
+            const btn = document.getElementById('run-demo-btn');
+            const originalText = btn.innerText;
+            
+            btn.innerText = 'Executando... (pode levar 1 min)';
+            btn.disabled = true;
+            btn.style.opacity = '0.7';
+            
+            // Oculta mensagem e botão se estiverem visíveis de uma execução anterior
+            document.getElementById('status-msg').style.display = 'none';
+            document.getElementById('report-btn').style.display = 'none';
+            document.getElementById('summary-container').style.display = 'none';
+            
+            try {
+                // Tenta rodar chamando o backend Node local
+                const response = await fetch('http://localhost:3000/api/run-test', { method: 'POST' });
+                const data = await response.json();
+                
+                if(data.success) {
+                    // Salva o resultado no localStorage para a página principal ler
+                    localStorage.setItem('cypressSummary', data.summary);
+                    localStorage.setItem('testJustFinished', 'true');
+                    
+                    // Redireciona para a página principal (uma pasta acima)
+                    window.location.href = '../index.html';
+                }
+            } catch (e) {
+                alert('Oops! O servidor Node local não está rodando.\nPor favor, volte na pasta e clique no arquivo INICIAR_INVISIVEL.vbs primeiro!');
+            } finally {
+                btn.innerText = 'Testes Concluídos!';
+                btn.style.background = '#059669'; // verde mais escuro
+                btn.style.opacity = '1';
+                // Remove o disabled para ele poder rodar de novo se quiser
+                btn.disabled = false;
+                setTimeout(() => { 
+                    btn.innerText = originalText; 
+                    btn.style.background = '#10b981';
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 </html>

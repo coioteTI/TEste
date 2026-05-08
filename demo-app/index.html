@@ -30,7 +30,12 @@
         function login() {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
-            if(email === 'teste@demo.com' && pass === '123456') {
+            
+            // Pega as credenciais cadastradas (se houver)
+            const regEmail = localStorage.getItem('registeredEmail');
+            const regPass = localStorage.getItem('registeredPass');
+
+            if((email === 'teste@demo.com' && pass === '123456') || (regEmail && email === regEmail && pass === regPass)) {
                 window.location.href = 'dashboard.html';
             } else {
                 document.getElementById('error-msg').style.display = 'block';
